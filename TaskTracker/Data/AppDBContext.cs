@@ -13,7 +13,6 @@ namespace TaskTracker.Data
 
         public DbSet<TaskEntryDB> Tasks { get; set; }
 
-        // Add this override
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
