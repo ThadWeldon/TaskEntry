@@ -1,0 +1,50 @@
+﻿@page
+@model TaskTracker.Pages.Tasks.IndexModel
+@{
+    ViewData["Title"] = "Task Tracker";
+}
+
+<style>
+    body {
+        background-color: #8d8a8a;
+    }
+    .tracker-box {
+        background: #f7f7f7;
+        border-radius: 12px;
+        border: 1px solid #ccc;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        padding: 32px 24px;
+        max-width: 500px;
+        margin: 40px auto;
+    }
+</style>
+
+<div class="tracker-box">
+<h1>Task Tracker</h1>
+
+<form method="post" style="width: 100%;">
+    <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+        <input type="text" name="Title" placeholder="Task Title..." style="width: 42%;" />
+        <div style="display: flex; flex-direction: row; gap: 10px; width: 60%;">
+            <textarea name="Description" placeholder="Task Description..." rows="3" style="width: 70%; resize: vertical;"></textarea>
+            <button type="submit" style="height: 40px; align-self: flex-start;">Add</button>
+        </div>
+    </div>
+</form>
+
+<ul>
+@foreach (var task in Model.Tasks)
+{
+    <li>
+        <form method="post" asp-page-handler="Toggle" asp-route-id="@task.Id">
+            <input type="checkbox" name="IsCompleted" onchange="this.form.submit()" @(task.IsCompleted ? "checked" : "") />
+            @task.Title - @task.Description
+        </form>
+    </li>
+}
+</ul>
+
+<form method="post" asp-page-handler="DeleteCompleted">
+    <button type="submit">Delete Completed Tasks</button>
+</form>
+</div>
